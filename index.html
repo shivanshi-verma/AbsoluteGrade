@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+</head>
+
+<body>
+    <h1>GPA Calculator</h1>
+    <form id="gpaForm">
+
+        <label for="credits">Credits: </label>
+        <input type="number" id="credits" min="5" required><br><br>
+
+        <table>
+            <tr>
+                <th>Assessment Component</th>
+                <th>Marks</th>
+            </tr>
+            <tr>
+                <td><label for="digitalAssessment">Digital Assessment - 1 (Marks out of 10):</label></td>
+                <td><input type="number" id="digitalAssessment" min="0" max="10" required></td>
+            </tr>
+
+            <tr>
+                <td><label for="quiz1">Quiz - I (Marks out of 10):</label></td>
+                <td><input type="number" id="quiz1" min="0" max="10" required></td>
+            </tr>
+
+            <tr>
+                <td><label for="quiz2">Quiz - II (Marks out of 10):</label></td>
+                <td><input type="number" id="quiz2" min="0" max="10" required></td>
+            </tr>
+
+            <tr>
+                <td><label for="cat1">Continuous Assessment Test - I (Marks out of 50):</label></td>
+                <td><input type="number" id="cat1" min="0" max="50" required></td>
+            </tr>
+
+            <tr>
+                <td><label for="cat2">Continuous Assessment Test - II (Marks out of 50):</label></td>
+                <td><input type="number" id="cat2" min="0" max="50" required></td>
+            </tr>
+
+            <tr>
+                <td><label for="finalExam">Final Assessment Test (Marks out of 100):</label></td>
+                <td><input type="number" id="finalExam" min="0" max="100" required></td>
+            </tr>
+        </table>
+
+        <button type="button" onclick="calculateGPA()">Calculate GPA</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateGPA() {
+            const credits = parseFloat(document.getElementById('credits').value);
+            const digitalAssessment = parseFloat(document.getElementById('digitalAssessment').value);
+            const quiz1 = parseFloat(document.getElementById('quiz1').value);
+            const quiz2 = parseFloat(document.getElementById('quiz2').value);
+            const cat1 = parseFloat(document.getElementById('cat1').value);
+            const cat2 = parseFloat(document.getElementById('cat2').value);
+            const finalExam = parseFloat(document.getElementById('finalExam').value);
+
+            const totalMarks = digitalAssessment + quiz1 + quiz2 + cat1 * 15 / 50 + cat2 * 15 / 50 + finalExam * 40 / 100;
+            let grd, grdL;
+
+            if (totalMarks >= 90) {
+                grd = 10;
+                grdL = 'S';
+            }
+            else if (totalMarks >= 80) {
+                grd = 9;
+                grdL = 'A';
+            }
+            else if (totalMarks >= 70) {
+                grd = 8;
+                grdL = 'B';
+            }
+            else if (totalMarks >= 60) {
+                grd = 7;
+                grdL = 'C';
+            }
+            else if (totalMarks >= 55) {
+                grd = 6;
+                grdL = 'D';
+            }
+            else if (totalMarks >= 50) {
+                grd = 5;
+                grdL = 'E';
+            }
+            else {
+                grd = 0;
+                grdL = 'F';
+            }
+
+            const gpa = (grd * credits) / credits;
+
+            document.getElementById('result').innerHTML = `<p>Your GPA is: ${gpa.toFixed(2)}</p>`;
+            document.getElementById('result').innerHTML += `<p>Your Grade is: ${grdL}</p>`; // Corrected typo in getElementById
+        }
+    </script>
+</body>
+
+</html>
